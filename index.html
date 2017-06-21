@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="screen-orientation" content="portrait">
+    <title>drap Down</title>
+</head>
+<body>
+
+    <!-- 背景模块 -->
+    <div id="background">
+        <p>由Rigar浏览器内核</p>
+        <p>提供支持</p>
+    </div>
+
+    <!-- 前景可下拉模块 -->
+    <div id="fontground">
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+        <p class="num"></p>
+    </div>
+
+    <!-- 底部模块 -->
+    <div id="bottom">
+        <ul>
+            <li><a href="#"><img src="static/home.png" alt=""><span>home</span></a></li>
+            <li><a href="#"><img src="static/shop.png" alt=""><span>shop</span></a></li>
+            <li><a href="#"><img src="static/list.png" alt=""><span>list</span></a></li>
+            <li><a href="#"><img src="static/user.png" alt=""><span>user</span></a></li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="public/jquery-3.1.1.min.js"></script>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+        <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+    <% } %>
+
+    <script type="text/javascript">
+        // 可自定义下拉模块的样式
+        // parent属性对应下拉模块的父元素，其中position，top，left三个属性无法修改
+        // dropDown属性对应自定义的前景下拉模块，其中overflow属性无法修改
+        var css = {
+            parent: {
+                position: 'absolute',
+                top: 10,
+                left: 10
+            },
+            dropDown: {
+                overflow: 'hidden'
+            }
+        }
+        var params = {
+            staticElementId: 'bottom',
+            cssParams: css
+        }
+        $('#fontground').initDropDown(params);
+    </script>
+</body>
+</html>

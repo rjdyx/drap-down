@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+	<meta name="HandheldFriendly" content="true">
+	<meta name="screen-orientation" content="portrait">
+	<title>drap Down</title>
+	<link rel="stylesheet" type="text/css" href="css/drop-down.2530c40f1938e64498316f1533da1bd1.css">
+</head>
+<body>
+
+	<!-- 背景模块 -->
+	<div id="background">
+		<p>由Rigar浏览器内核</p>
+		<p>提供支持</p>
+	</div>
+
+	<!-- 前景可下拉模块 -->
+	<div id="fontground">
+		<p class="num"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+		<p class="num1"></p>
+	</div>
+
+	<!-- 底部模块 -->
+	<div id="bottom">
+		<ul>
+			<li><a href="#"><img src="images/home.png" alt=""><span>home</span></a></li>
+			<li><a href="#"><img src="images/shop.png" alt=""><span>shop</span></a></li>
+			<li><a href="#"><img src="images/list.png" alt=""><span>list</span></a></li>
+			<li><a href="#"><img src="images/user.png" alt=""><span>user</span></a></li>
+		</ul>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/drop-down.71688376e1427c295e5f.js"></script>
+	<script type="text/javascript">
+        // 可自定义下拉模块的样式
+        // parent属性对应下拉模块的父元素，其中position，top，left三个属性无法修改
+        // dropDown属性对应自定义的前景下拉模块，其中overflow属性无法修改
+        var css = {
+            parent: {
+                position: 'absolute',
+                top: 10,
+                left: 10
+            },
+            dropDown: {
+                overflow: 'hidden'
+            }
+        }
+        var params = {
+            staticElementId: 'bottom',
+            cssParams: css
+        }
+        $('#fontground').initDropDown(params);
+    </script>
+</body>
+</html>
