@@ -33,9 +33,57 @@ html,body {
 	background-color: #fafafa;
 }
 
-#fontground p{
+/* 顶部 */
+#header {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background: #2196F3;
+    color: white;
+    text-align: center;
+}
+
+#header p {
+    font-size: 16px;
+}
+
+#header span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    margin: auto;
+    width: 18px;
+    height: 18px;
+    background-image: url(../../static/left-raw.png);
+    background-size: 100%;
+}
+
+/* 中间内容 */
+.content {
+
+}
+
+#slider {
+    height: 150px;
+    background: rgba(158, 158, 158, 0.23);
+}
+
+.slider-img {
+    width: 100px;
+    height: 150px;
+    line-height: 150px;
+    background-image: url(../../static/logo.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+}
+
+#fontground>p{
     width: 94%;
-    height: 53px;
+    /*height: 53px;*/
     background-color: white;
     margin: 7px 3%;
     padding: 5px 17px;
@@ -65,13 +113,33 @@ html,body {
 	width: 25%;
 }
 
-#bottom ul li img,#bottom ul li span {
+#bottom ul li .img,#bottom ul li span {
 	display: block;
 }
 
-#bottom ul li img {
+#bottom ul li .img {
 	width: 18px;
 	height: 18px;
     margin-top: 6px;
     margin-bottom: -3px;
+}
+
+#home {
+    background-image: url(../../static/home.png);
+    background-size: 100%;
+}
+
+#shop {
+    background-image: url(../../static/shop.png);
+    background-size: 100%;
+}
+
+#list {
+    background-image: url(../../static/list.png);
+    background-size: 100%;
+}
+
+#user {
+    background-image: url(../../static/user.png);
+    background-size: 100%;
 }

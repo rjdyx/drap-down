@@ -3,7 +3,6 @@ var webpack = require('webpack')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 function resolve (dir) {
   return path.resolve(__dirname, dir)
@@ -22,9 +21,6 @@ var webpackConfig = merge(baseWebpackConfig, {
         warnings: false
       },
       sourceMap: true
-    }),
-    new ExtractTextPlugin({
-      filename: 'css/[name].[contenthash].css'
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

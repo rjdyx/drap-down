@@ -13,6 +13,8 @@ function touchstart (event) {
     let touch = event.targetTouches[0]
     // 记录第一个触摸点的y坐标
     GlobalVariable.globalYPosition = touch.pageY
+    // 清除class
+    $(GlobalVariable.dropDown).removeClass('slideInUp')
 }
 
 /**
@@ -80,20 +82,12 @@ function touchend (event) {
         // 初始参数复原
         GlobalVariable.flag = false
         GlobalVariable.globalYPosition = 0
-        clearInterval(GlobalVariable.timer)
-        GlobalVariable.timer = setInterval(() => {
-            // 获取元素当前的y坐标
-            let tmp = GlobalVariable.dropDown.style.top
-            let now = (tmp).substring(0, tmp.length - 2)
-            if (now < 1) {
-                clearInterval(GlobalVariable.timer)
-                GlobalVariable.dropDown.style.top = 0
-                GlobalVariable.parentOrigin.style.top = 0
-            } else {
-                GlobalVariable.dropDown.style.top = now * 1.0 - 5 + 'px'
-                GlobalVariable.parentOrigin.style.top = now * 1.0 - 5 + 'px'
-            }
-        }, 10)
+        let top = GlobalVariable.dropDown.style.top
+        if (document.styleSheets[0].cssRules[0]) document.styleSheets[0].cssRules[0].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
+        if (document.styleSheets[0].cssRules[1]) document.styleSheets[0].cssRules[1].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
+        $(GlobalVariable.dropDown).attr('class', 'slideInUp')
+        GlobalVariable.dropDown.style.top = '0px'
+        GlobalVariable.parentOrigin.style.top = '0px'
     }
 }
 
