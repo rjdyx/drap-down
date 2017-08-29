@@ -65,29 +65,32 @@ html,body {
 
 }
 
-#slider {
-    height: 150px;
-    background: rgba(158, 158, 158, 0.23);
+.content ul {
+
 }
 
-.slider-img {
-    width: 100px;
-    height: 150px;
-    line-height: 150px;
-    background-image: url(../../static/logo.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: auto;
+.content ul li {
+    overflow: hidden;
+    background: white;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
 }
 
-#fontground>p{
-    width: 94%;
-    /*height: 53px;*/
-    background-color: white;
-    margin: 7px 3%;
-    padding: 5px 17px;
-    box-sizing: border-box;
+.goods-pic {
+    float: left;
+    margin: 11px;
+}
+
+.text {
+    float: left;
+    width: 66%;
+    margin: 11px 0;
+}
+
+.description {
+    color: #999999;
+    font-size: 12px;
+    margin: 3px 0;
 }
 
 /* 底部模块 */
@@ -115,6 +118,7 @@ html,body {
 
 #bottom ul li .img,#bottom ul li span {
 	display: block;
+    color: #777681;
 }
 
 #bottom ul li .img {
