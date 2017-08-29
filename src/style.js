@@ -14,7 +14,7 @@ const initCss = (parent, dropDown, cssParams) => {
     let dropDownCss = {
         width: '100%',
         height: '100%',
-        overflow: 'scroll'
+        overflow: 'auto'
     }
     // 不能被覆盖的属性
     let filterParentPro = ['position', 'top', 'left']
