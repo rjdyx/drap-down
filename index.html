@@ -35,17 +35,19 @@
         </div>
         <div class="content">
             <ul>
-                <li>
-                    <% if (process.env.NODE_ENV !== 'development') { %>
-                        <img src="images/logo.png" alt="" class="goods-pic" style="width: 25%;">
-                    <% } else { %>
-                        <img src="../../static/logo.png" alt="" class="goods-pic" style="width: 25%;">
-                    <% } %>
-                    <div class="text">
-                        <p class="title">What is Vue.js?</p>
-                        <p class="description">Vue is a progressive framework</p>
-                    </div>
-                </li>
+                <% for (var i = 0 ; i < 10 ; i++) { %>
+                    <li>
+                        <% if (process.env.NODE_ENV !== 'development') { %>
+                            <img src="images/logo.png" alt="" class="goods-pic" style="width: 25%;">
+                        <% } else { %>
+                            <img src="../../static/logo.png" alt="" class="goods-pic" style="width: 25%;">
+                        <% } %>
+                        <div class="text">
+                            <p class="title">What is Vue.js?</p>
+                            <p class="description">Vue is a progressive framework</p>
+                        </div>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>
