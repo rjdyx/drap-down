@@ -1,7 +1,10 @@
 // 引入css文件
 require('css/keyframes.css')
 require('css/animation.css')
-require('css/reset.css')
-require('css/index.css')
+if (process.env.NODE_ENV === 'development') {
+    require('../example/css/reset.css')
+    require('../example/css/index.css')
+}
 // 引入下拉插件
 require('./drap-down')
+console.log(document.styleSheets[0])

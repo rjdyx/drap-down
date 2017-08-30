@@ -1,8 +1,8 @@
 body,h1,h2,h3,h4,h5,h6,blockquote,p,pre,dl,dd,ol,ul,li,a,span,caption,th,td,form,fieldset,legend,input,button,textarea,address{margin:0;padding:0}
 
 html,body {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* 背景模块 */
@@ -11,26 +11,26 @@ html,body {
     position: absolute;
     top: 0;
     left: 0;
-	width: 100%;
-	height: 100%;
-	color: grey;
-	background-color: black;
+    width: 100%;
+    height: 100%;
+    color: grey;
+    background-color: black;
     z-index: -1;
 }
 
 #background p {
-	padding-top: 10px;
-	text-align: center;
+    padding-top: 10px;
+    text-align: center;
 }
 
 #background p:first-child {
-	padding-top: 40px;
+    padding-top: 40px;
 }
 
 /* 前景可下拉模块 */
 
 #fontground {
-	background-color: #fafafa;
+    background-color: #fafafa;
 }
 
 /* 顶部 */
@@ -56,7 +56,7 @@ html,body {
     margin: auto;
     width: 18px;
     height: 18px;
-    background-image: url(../../static/left-raw.png);
+    background-image: url(../images/left-raw.png);
     background-size: 100%;
 }
 
@@ -96,54 +96,54 @@ html,body {
 /* 底部模块 */
 
 #bottom {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 45px;
-	background-color: white;
-	text-align: -webkit-center;
-	z-index: 19920220;
-	box-shadow: 0 11px 53px -5px black;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 45px;
+    background-color: white;
+    text-align: -webkit-center;
+    z-index: 19920220;
+    box-shadow: 0 11px 53px -5px black;
 }
 
 #bottom ul {
-	list-style: none;
+    list-style: none;
 }
 
 #bottom ul li {
-	float: left;
-	width: 25%;
+    float: left;
+    width: 25%;
 }
 
 #bottom ul li .img,#bottom ul li span {
-	display: block;
+    display: block;
     color: #777681;
 }
 
 #bottom ul li .img {
-	width: 18px;
-	height: 18px;
+    width: 18px;
+    height: 18px;
     margin-top: 6px;
     margin-bottom: -3px;
 }
 
 #home {
-    background-image: url(../../static/home.png);
+    background-image: url(../images/home.png);
     background-size: 100%;
 }
 
 #shop {
-    background-image: url(../../static/shop.png);
+    background-image: url(../images/shop.png);
     background-size: 100%;
 }
 
 #list {
-    background-image: url(../../static/list.png);
+    background-image: url(../images/list.png);
     background-size: 100%;
 }
 
 #user {
-    background-image: url(../../static/user.png);
+    background-image: url(../images/user.png);
     background-size: 100%;
 }
