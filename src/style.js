@@ -3,7 +3,6 @@
 const initCss = (dropDown, cssParams, cusCss = null) => {
     let dropDownCss = {
         position: 'absolute',
-        top: '-300px',
         width: '100%',
         height: '100%',
         overflow: 'auto',

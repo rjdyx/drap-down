@@ -1,3 +1,5 @@
+import { initCss } from './style'
+
 let GlobalVariable = null
 
 function init (GlobalVariableParams) {
@@ -15,6 +17,11 @@ function touchstart (event) {
     GlobalVariable.globalYPosition = touch.pageY
     // 清除class
     $(GlobalVariable.dropDown).removeClass('slideInUp')
+    if (GlobalVariable.dropDown.style.paddingTop === '0px' && GlobalVariable.dropDown.scrollTop <= 300) {
+        console.log('inini')
+        GlobalVariable.dropDown.style.paddingTop = '300px'
+        GlobalVariable.dropDown.scrollTop = 300
+    }
 }
 
 /**
@@ -22,6 +29,7 @@ function touchstart (event) {
  * @param  {object} event 触摸事件对象
  */
 function touchmove (event) {
+    GlobalVariable.touching = true
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
     // 获取本次触摸点与上次触摸点的y间距
@@ -31,50 +39,19 @@ function touchmove (event) {
     // 获取元素当前的y坐标
     let tmp = GlobalVariable.dropDown.style.top
     let now = (tmp).substring(0, tmp.length - 2)
-    // 定义元素y坐标移动的间距变量
-    let intervel = 0
-    if (letiable > 0) {
-        console.log(1)
-        // 元素y坐标与可视化区域的顶部的间距大于零或则等于零，则可下滑；
-        // 判断元素y坐标与可视化区域的顶部的间距等于零，
-        // 是考虑到屏幕滚动到下方，此时下拉不应该触发模块下滑效果；
-        // 也需要判断元素y坐标与可视化区域的顶部的间距大于零，
-        // 不这样做的话，则无法下拉模块
-        if (GlobalVariable.dropDown.scrollTop === 0 || GlobalVariable.flag) {
-            console.log(2)
-            console.log(GlobalVariable.dropDown.scrollTop)
-            // 阻止触摸时浏览器的缩放、滚动条滚动等
-            event.preventDefault()
-            GlobalVariable.flag = true
-            // 元素匀速下滑100px，之后则减速下滑
-            if (now < 100) {
-                intervel = letiable
-            } else {
-                intervel = Math.log(now) - Math.log(now - 90)
-            }
-            // 防止下滑跨度过大
-            if (intervel > 15) intervel = 15
-            // 改变元素的y坐标，即改变元素的位置
-            GlobalVariable.dropDown.style.top = now * 1.0 + intervel + 'px'
-        }
-    } else if (GlobalVariable.dropDown.style.top.substring(0, tmp.length - 2) > 0) {
-        console.log(3)
-        // 阻止触摸时浏览器的缩放、滚动条滚动等
-        event.preventDefault()
-        // 元素y坐标递减过程中很难保证减到刚好为0，
-        // 故判断其减到少于1.5px时，则让元素y坐标为0
-        if (now < 1.5) {
-            GlobalVariable.dropDown.style.top = '0px'
-        } else {
-            // 让元素加速上升
-            intervel = Math.log(now)
-            GlobalVariable.dropDown.style.top = now * 1.0 - intervel + 'px'
-        }
-    } else if (GlobalVariable.flag) {
-        console.log(4)
-        event.preventDefault()
-        GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
+    GlobalVariable.scrollTop = GlobalVariable.dropDown.scrollTop
+    console.log(GlobalVariable.scrollTop)
+    // if (GlobalVariable.dropDown.scrollTop < 30) {
+    //     console.log('in')
+    //     event.preventDefault()
+    //     GlobalVariable.dropDown.scrollTop = 30
+    // }
+    if (letiable < 0 || GlobalVariable.scrollTop > 300) {
+        GlobalVariable.flag = false
+    } else {
+        GlobalVariable.flag = true
     }
+    console.log(GlobalVariable.flag)
 }
 
 /**
@@ -83,16 +60,19 @@ function touchmove (event) {
  */
 function touchend (event) {
     // 只有触摸并移动过，才能触动自动上升回滚功能
-    if (GlobalVariable.flag) {
+    if (GlobalVariable.flag || GlobalVariable.dropDown.scrollTop < 300) {
         // 初始参数复原
         GlobalVariable.flag = false
+        GlobalVariable.touching = false
         GlobalVariable.globalYPosition = 0
-        let tmp = GlobalVariable.dropDown.style.top
-        let top = parseInt(tmp.substring(0, tmp.length - 2)) + 300 + 'px'
+        GlobalVariable.dropDown.style.paddingTop = '300px'
+        let top = 300 - GlobalVariable.scrollTop + 'px'
+        console.log('top:' + top)
         if (document.styleSheets[0].cssRules[0]) document.styleSheets[0].cssRules[0].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
         if (document.styleSheets[0].cssRules[1]) document.styleSheets[0].cssRules[1].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
         $(GlobalVariable.dropDown).attr('class', 'slideInUp')
-        GlobalVariable.dropDown.style.top = '-300px'
+        GlobalVariable.dropDown.style.top = 'inherit'
+        GlobalVariable.dropDown.scrollTop = 300
     }
 }
 
