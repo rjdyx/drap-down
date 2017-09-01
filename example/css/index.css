@@ -30,7 +30,7 @@ html,body {
 /* 前景可下拉模块 */
 
 #fontground {
-    background-color: #fafafa;
+    
 }
 
 /* 顶部 */
@@ -62,7 +62,7 @@ html,body {
 
 /* 中间内容 */
 .content {
-
+    background-color: #fafafa;
 }
 
 .content ul {
