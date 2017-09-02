@@ -47,9 +47,21 @@ $.fn.initDropDown = function ({staticElementId, cssParams = {}}) {
 $(function () {
     GlobalVariable.dropDown.scrollTop = 300
     $(GlobalVariable.dropDown).scroll(() => {
-        if (!GlobalVariable.flag && !GlobalVariable.touching) {
+        // console.log(GlobalVariable.dropDown.scrollTop)
+        if (GlobalVariable.dropDown.scrollTop > 300 && !GlobalVariable.touching && !GlobalVariable.reset) {
             console.log('i')
-            // GlobalVariable.dropDown.style.paddingTop = '0px'
+            GlobalVariable.reset = true
+            // GlobalVariable.dropDown.scrollTop -= 300
+            GlobalVariable.dropDown.style.paddingTop = '0px'
+        }
+        if (GlobalVariable.dropDown.scrollTop === 0) {
+            setTimeout(reset, 100)
         }
     })
 })
+
+function reset () {
+    GlobalVariable.dropDown.style.paddingTop = '300px'
+    GlobalVariable.dropDown.scrollTop += 300
+    GlobalVariable.reset = false
+}

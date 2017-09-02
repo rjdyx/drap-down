@@ -6,8 +6,6 @@ let GlobalVariable = {
     globalYPosition: 0,
     // 全局时间戳
     timeStamp: 0,
-    // 定时对象
-    timer: null,
     // 是否触发回滚
     flag: true,
     // 静止元素对象
@@ -21,7 +19,11 @@ let GlobalVariable = {
     // 下拉元素的滚动条距离
     scrollTop: 0,
     // 表示正在触碰
-    touching: false
+    touching: false,
+    //
+    reset: false,
+    //
+    upDownMoving: false
 }
 
 export { GlobalVariable }

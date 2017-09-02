@@ -22,6 +22,7 @@ function touchstart (event) {
         GlobalVariable.dropDown.style.paddingTop = '300px'
         GlobalVariable.dropDown.scrollTop = 300
     }
+    GlobalVariable.timeStamp = event.timeStamp
 }
 
 /**
@@ -30,26 +31,56 @@ function touchstart (event) {
  */
 function touchmove (event) {
     GlobalVariable.touching = true
+    GlobalVariable.scrollTop = GlobalVariable.dropDown.scrollTop
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
     // 获取本次触摸点与上次触摸点的y间距
     let letiable = touch.pageY - GlobalVariable.globalYPosition
     // 记录本次触摸点的y坐标
     GlobalVariable.globalYPosition = touch.pageY
-    // 获取元素当前的y坐标
-    let tmp = GlobalVariable.dropDown.style.top
-    let now = (tmp).substring(0, tmp.length - 2)
-    GlobalVariable.scrollTop = GlobalVariable.dropDown.scrollTop
-    console.log(GlobalVariable.scrollTop)
-    // if (GlobalVariable.dropDown.scrollTop < 30) {
-    //     console.log('in')
-    //     event.preventDefault()
-    //     GlobalVariable.dropDown.scrollTop = 30
-    // }
-    if (letiable < 0 || GlobalVariable.scrollTop > 300) {
-        GlobalVariable.flag = false
-    } else {
-        GlobalVariable.flag = true
+    // 定义元素y坐标移动的间距变量
+    let intervel = 0
+    if (letiable > 0) {
+        console.log(1)
+        if (GlobalVariable.scrollTop === 300 || GlobalVariable.flag || GlobalVariable.upDownMoving) {
+            console.log('in')
+            // 阻止触摸时浏览器的缩放、滚动条滚动等
+            event.preventDefault()
+            GlobalVariable.flag = true
+            console.log(GlobalVariable.scrollTop)
+            // 元素匀速下滑100px，之后则减速下滑
+            if (GlobalVariable.scrollTop > 200) {
+                intervel = letiable
+            } else {
+                intervel = Math.log(GlobalVariable.scrollTop) - Math.log(GlobalVariable.scrollTop - 90)
+            }
+            // 防止下滑跨度过大
+            if (intervel > 15) intervel = 15
+            // 改变元素的y坐标，即改变元素的位置
+            console.log(intervel)
+            GlobalVariable.dropDown.scrollTop -= intervel
+        }
+    } else if (GlobalVariable.scrollTop < 300) {
+        console.log(3)
+        // 阻止触摸时浏览器的缩放、滚动条滚动等
+        event.preventDefault()
+        // 元素y坐标递减过程中很难保证减到刚好为0，
+        // 故判断其减到少于1.5px时，则让元素y坐标为0
+        if (GlobalVariable.scrollTop < 1.5) {
+            GlobalVariable.dropDown.scrollTop = 300
+        } else {
+            // 让元素加速上升
+            intervel = Math.log(GlobalVariable.scrollTop)
+            GlobalVariable.dropDown.scrollTop += intervel
+        }
+    } else if (letiable < 0 && GlobalVariable.scrollTop > 300) {
+        console.log(4)
+        GlobalVariable.upDownMoving = true
+    }
+    if (GlobalVariable.scrollTop <= 160) {
+        console.log(0)
+        event.preventDefault()
+        GlobalVariable.dropDown.scrollTop = 160
     }
     console.log(GlobalVariable.flag)
 }
@@ -59,6 +90,13 @@ function touchmove (event) {
  * @param  {object} event 触摸事件对象
  */
 function touchend (event) {
+    GlobalVariable.touching = false
+    GlobalVariable.upDownMoving = false
+    if (GlobalVariable.dropDown.scrollTop > 300 && !GlobalVariable.reset) {
+        console.log('i2')
+        GlobalVariable.dropDown.scrollTop += 300
+        GlobalVariable.dropDown.style.paddingTop = '0px'
+    }
     // 只有触摸并移动过，才能触动自动上升回滚功能
     if (GlobalVariable.flag || GlobalVariable.dropDown.scrollTop < 300) {
         // 初始参数复原
