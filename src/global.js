@@ -12,8 +12,6 @@ let GlobalVariable = {
     staticElement: null,
     // 下拉元素对象
     dropDown: null,
-    // 下拉元素父对象
-    parentOrigin: null,
     // 下拉元素扩展样式对象
     cssParams: null,
     // 下拉元素的滚动条距离
@@ -23,7 +21,12 @@ let GlobalVariable = {
     //
     reset: false,
     //
-    upDownMoving: false
+    upDownMoving: false,
+    //
+    count: 0,
+    //
+    upDownFlag: true,
+    lastIntervel: 0
 }
 
 export { GlobalVariable }

@@ -41,48 +41,71 @@ function touchmove (event) {
     // 定义元素y坐标移动的间距变量
     let intervel = 0
     if (letiable > 0) {
-        console.log(1)
         if (GlobalVariable.scrollTop === 300 || GlobalVariable.flag || GlobalVariable.upDownMoving) {
-            console.log('in')
-            // 阻止触摸时浏览器的缩放、滚动条滚动等
-            event.preventDefault()
             GlobalVariable.flag = true
-            console.log(GlobalVariable.scrollTop)
-            // 元素匀速下滑100px，之后则减速下滑
-            if (GlobalVariable.scrollTop > 200) {
-                intervel = letiable
-            } else {
-                intervel = Math.log(GlobalVariable.scrollTop) - Math.log(GlobalVariable.scrollTop - 90)
+            if (GlobalVariable.upDownMoving && GlobalVariable.count < 5 && GlobalVariable.scrollTop > 300 && GlobalVariable.scrollTop <= 310) {
+                console.log('updown')
+                console.log(GlobalVariable.dropDown.scrollTop)
+                if (GlobalVariable.scrollTop > 300 && GlobalVariable.scrollTop <= 310) {
+                    GlobalVariable.dropDown.scrollTop = 300
+                }
+                GlobalVariable.dropDown.style.overflow = 'hidden'
+                GlobalVariable.count++
+                GlobalVariable.upDownFlag = false
             }
-            // 防止下滑跨度过大
-            if (intervel > 15) intervel = 15
-            // 改变元素的y坐标，即改变元素的位置
-            console.log(intervel)
-            GlobalVariable.dropDown.scrollTop -= intervel
+            if (GlobalVariable.upDownFlag || GlobalVariable.count >= 5) {
+                console.log('down')
+                if (GlobalVariable.dropDown.style.overflow === 'hidden') {
+                    console.log('down hidden')
+                    GlobalVariable.dropDown.style.overflow = 'auto'
+                    // GlobalVariable.dropDown.scrollTop = 300
+                }
+                // 阻止触摸时浏览器的缩放、滚动条滚动等
+                event.preventDefault()
+                if (!GlobalVariable.lastIntervel) {
+                    GlobalVariable.lastIntervel = Math.log(301 - GlobalVariable.scrollTop) - 0.1
+                }
+                if (301 - GlobalVariable.scrollTop === 1) {
+                    intervel = 0.1
+                } else {
+                    intervel = Math.log(301 - GlobalVariable.scrollTop) - GlobalVariable.lastIntervel
+                    GlobalVariable.lastIntervel = Math.log(301 - GlobalVariable.scrollTop)
+                }
+                // 将其他情况的归零
+                if (!intervel) {
+                    intervel = 0
+                }
+                // 防止数字过大
+                if (intervel > 0.1) {
+                    intervel = 0.01
+                }
+                intervel = Math.abs(intervel) * 50
+                if (intervel > 5) {
+                    intervel = 5
+                }
+                GlobalVariable.dropDown.scrollTop -= intervel
+            }
         }
-    } else if (GlobalVariable.scrollTop < 300) {
-        console.log(3)
+    } else if (letiable < 0 && GlobalVariable.scrollTop < 300) {
         // 阻止触摸时浏览器的缩放、滚动条滚动等
         event.preventDefault()
-        // 元素y坐标递减过程中很难保证减到刚好为0，
-        // 故判断其减到少于1.5px时，则让元素y坐标为0
-        if (GlobalVariable.scrollTop < 1.5) {
-            GlobalVariable.dropDown.scrollTop = 300
-        } else {
-            // 让元素加速上升
-            intervel = Math.log(GlobalVariable.scrollTop)
-            GlobalVariable.dropDown.scrollTop += intervel
+        // 让元素加速上升
+        console.log('up: ' + GlobalVariable.upDownFlag)
+        console.log(GlobalVariable.scrollTop)
+        if (!GlobalVariable.upDownFlag && GlobalVariable.scrollTop >= 299) {
+            console.log('cancel')
+            // unbindTouchmove()
+            GlobalVariable.dropDown.style.top -= letiable + 'px'
+            console.log(GlobalVariable.dropDown.style.top)
         }
+        GlobalVariable.dropDown.scrollTop -= letiable
+        // console.log(GlobalVariable.dropDown.scrollTop)
     } else if (letiable < 0 && GlobalVariable.scrollTop > 300) {
-        console.log(4)
         GlobalVariable.upDownMoving = true
     }
-    if (GlobalVariable.scrollTop <= 160) {
-        console.log(0)
-        event.preventDefault()
-        GlobalVariable.dropDown.scrollTop = 160
+    if (letiable > 0 && GlobalVariable.scrollTop <= 100) {
+        GlobalVariable.dropDown.scrollTop = 100
     }
-    console.log(GlobalVariable.flag)
 }
 
 /**
@@ -92,8 +115,13 @@ function touchmove (event) {
 function touchend (event) {
     GlobalVariable.touching = false
     GlobalVariable.upDownMoving = false
+    if (!GlobalVariable.upDownFlag) {
+        // bindTouchmove()
+        GlobalVariable.upDownFlag = true
+    }
+    GlobalVariable.count = 0
+    GlobalVariable.lastIntervel = 0
     if (GlobalVariable.dropDown.scrollTop > 300 && !GlobalVariable.reset) {
-        console.log('i2')
         GlobalVariable.dropDown.scrollTop += 300
         GlobalVariable.dropDown.style.paddingTop = '0px'
     }
@@ -105,7 +133,6 @@ function touchend (event) {
         GlobalVariable.globalYPosition = 0
         GlobalVariable.dropDown.style.paddingTop = '300px'
         let top = 300 - GlobalVariable.scrollTop + 'px'
-        console.log('top:' + top)
         if (document.styleSheets[0].cssRules[0]) document.styleSheets[0].cssRules[0].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
         if (document.styleSheets[0].cssRules[1]) document.styleSheets[0].cssRules[1].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
         $(GlobalVariable.dropDown).attr('class', 'slideInUp')
@@ -137,6 +164,14 @@ function staticTouchmove (event) {
  * @param  {object} event 触摸事件对象
  */
 function staticTouchend (event) {}
+
+function bindTouchmove () {
+    GlobalVariable.dropDown.addEventListener('touchmove', touchmove)
+}
+
+function unbindTouchmove () {
+    GlobalVariable.dropDown.removeEventListener('touchmove', touchmove)
+}
 
 export {
     init,
