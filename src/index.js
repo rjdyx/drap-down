@@ -1,3 +1,3 @@
-$('#submit').click(() => {
-    alert($('#content-input input').val())
+$('#header').click(() => {
+    $('#header p').html('Drop Down')
 })

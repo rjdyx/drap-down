@@ -62,6 +62,7 @@ html,body {
 
 /* 中间内容 */
 .content {
+    position: relative;
     background-color: #fafafa;
 }
 

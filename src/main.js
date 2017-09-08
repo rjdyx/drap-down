@@ -7,3 +7,4 @@ if (process.env.NODE_ENV === 'development') {
 }
 // 引入下拉插件
 require('./drap-down')
+require('./index')
