@@ -42,7 +42,7 @@ function touchmove (event) {
     if (letiable < -15) {
         letiable = -15
     }
-    console.log(letiable)
+    // console.log(letiable)
     // 记录本次触摸点的y坐标
     GlobalVariable.globalYPosition = touch.pageY
     // 获取拖动元素的当前的top值
@@ -56,7 +56,7 @@ function touchmove (event) {
         // flag为true，则触摸结束时触发回滚且表示触摸滑动操作一直在继续
         GlobalVariable.flag = true
         // scrollTop小于300则触发减速下滑操作
-        // console.log(GlobalVariable.scrollTop)
+        console.log(GlobalVariable.scrollTop)
         // console.log(now)
         if (GlobalVariable.scrollTop <= 300 && now === 'inherit') {
             // console.log(2)
@@ -118,7 +118,6 @@ function touchend (event) {
         let top = 300 - GlobalVariable.scrollTop + 'px'
         GlobalVariable.dropDown.style.top = 'inherit'
         rollback(top)
-        setTimeout(checkRollback, 410)
     }
 }
 
@@ -163,16 +162,6 @@ function rollback (top) {
     if (document.styleSheets[0].cssRules[1]) document.styleSheets[0].cssRules[1].cssRules[0].style.cssText = `transform: translate3d(0px, ${top}, 0px); visibility: visible;`
     $(GlobalVariable.dropDown).attr('class', 'slideInUp')
     GlobalVariable.dropDown.scrollTop = 300
-}
-
-/**
- * 第二遍检查回滚
- */
-function checkRollback () {
-    let scrollTop = GlobalVariable.dropDown.scrollTop
-    if (scrollTop !== 300) {
-        rollback(scrollTop + 'px')
-    }
 }
 
 /**
