@@ -11,7 +11,8 @@ function init (GlobalVariableParams) {
  * @param  {object} event 触摸事件对象
  */
 function touchstart (event) {
-    console.log('start')
+    // console.log('start')
+    event.preventDefault()
     GlobalVariable.firstScroll = GlobalVariable.dropDown.scrollTop
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
@@ -27,35 +28,74 @@ function touchstart (event) {
  */
 function touchmove (event) {
     console.log('moving')
+    // 阻止触摸时浏览器的缩放、滚动条滚动等
+    event.preventDefault()
+    // 获取滚动条距离
     GlobalVariable.scrollTop = GlobalVariable.dropDown.scrollTop
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
     // 获取本次触摸点与上次触摸点的y间距
     let letiable = touch.pageY - GlobalVariable.globalYPosition
+    if (letiable > 15) {
+        letiable = 15
+    }
+    if (letiable < -15) {
+        letiable = -15
+    }
+    console.log(letiable)
     // 记录本次触摸点的y坐标
     GlobalVariable.globalYPosition = touch.pageY
-    // 定义元素y坐标移动的间距变量
+    // 获取拖动元素的当前的top值
+    let tmp = GlobalVariable.dropDown.style.top
+    let now = tmp === 'inherit' ? tmp : (tmp).substring(0, tmp.length - 2)
     let intervel = 0
+    console.log('GlobalVariable.scrollTop: ' + GlobalVariable.scrollTop)
+    // 下拉操作
     if (letiable > 0) {
+        console.log('下拉')
+        // flag为true，则触摸结束时触发回滚且表示触摸滑动操作一直在继续
         GlobalVariable.flag = true
-        if (GlobalVariable.scrollTop === 300 || GlobalVariable.flag || GlobalVariable.upDownMoving) {
-            if (GlobalVariable.upDownMoving) {
-                GlobalVariable.upDownFlag = false
+        // scrollTop小于300则触发减速下滑操作
+        console.log(GlobalVariable.scrollTop)
+        console.log(now)
+        if (GlobalVariable.scrollTop <= 300 && now === 'inherit') {
+            console.log(2)
+            intervel = rollbackSpeed(GlobalVariable.scrollTop, 70)
+            GlobalVariable.dropDown.scrollTop -= intervel
+        } else {
+            console.log(3)
+            GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
+            // 使用top操控上滑过并且现在top的值大于等于0，则停止top操控
+            if ((now * 1.0 + letiable) >= 0) {
+                GlobalVariable.dropDown.style.top = 'inherit'
             }
-            if (GlobalVariable.upDownFlag && GlobalVariable.firstScroll === 300) {
-                // 阻止触摸时浏览器的缩放、滚动条滚动等
-                event.preventDefault()
-                intervel = rollbackSpeed(GlobalVariable.scrollTop, 70)
-                GlobalVariable.dropDown.scrollTop -= intervel
+            // 调整scrollTop
+            // 在上下滑动的过程中偶尔会出现scrollTop无法完全滚动到300的偏差，故在此做调整
+            if (GlobalVariable.scrollTop !== 300) {
+                GlobalVariable.dropDown.scrollTop = 300
             }
         }
-    } else if (letiable < 0 && GlobalVariable.scrollTop < 300) {
-        // 阻止触摸时浏览器的缩放、滚动条滚动等
-        event.preventDefault()
-        GlobalVariable.dropDown.scrollTop -= letiable
-    } else if (letiable < 0 && GlobalVariable.scrollTop > 300) {
-        GlobalVariable.upDownMoving = true
+    } else if (letiable < 0) { // 上滑操作
+        console.log('上滑')
+        // 下拉出现背景后的上滑操作
+        if (GlobalVariable.scrollTop < 300) {
+            console.log(4)
+            GlobalVariable.dropDown.scrollTop -= letiable
+        } else { // 其他情况的上滑操作
+            console.log(5)
+            // 使用top控制滑动，故将top从inherit转换成pix
+            if (now === 'inherit') {
+                GlobalVariable.dropDown.style.top = '0px'
+                now = 0
+            }
+            GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
+            // 组织拖动模块上滑过度
+            if (now < -300) {
+                GlobalVariable.dropDown.style.top = '-300px'
+            }
+        }
     }
+    // 当下拉距离到达200时，停止下拉
     if (letiable > 0 && GlobalVariable.scrollTop <= 100) {
         GlobalVariable.dropDown.scrollTop = 100
     }
@@ -66,7 +106,7 @@ function touchmove (event) {
  * @param  {object} event 触摸事件对象
  */
 function touchend (event) {
-    console.log('end')
+    // console.log('end')
     let scrollTop = GlobalVariable.dropDown.scrollTop
     // 只有触摸并移动过，才能触动自动上升回滚功能
     if (GlobalVariable.flag && scrollTop < 300) {
@@ -75,32 +115,18 @@ function touchend (event) {
         GlobalVariable.globalYPosition = 0
         GlobalVariable.dropDown.style.paddingTop = '300px'
         let top = 300 - GlobalVariable.scrollTop + 'px'
+        GlobalVariable.dropDown.style.top = 'inherit'
         rollback(top)
         setTimeout(checkRollback, 410)
-    }
-    if (scrollTop > 300) {
-        console.log('end unbind')
-        unbindTouchmove()
-        unbindTouchend()
     }
 }
 
 function touching (event) {
     GlobalVariable.touching = true
-    if (GlobalVariable.dropDown.scrollTop <= 300) {
-        // GlobalVariable.upDownFlag = false
-        bindTouchmove()
-        bindTouchend()
-    }
 }
 
 function touched (event) {
     GlobalVariable.touching = false
-    GlobalVariable.upDownMoving = false
-    GlobalVariable.upDownFlag = true
-    GlobalVariable.reset = false
-    GlobalVariable.count = 0
-    GlobalVariable.lastIntervel = 0
 }
 
 /**

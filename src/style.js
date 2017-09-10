@@ -5,8 +5,9 @@ const initCss = (dropDown, cssParams, cusCss = null) => {
         position: 'absolute',
         width: '100%',
         height: '100%',
-        overflow: 'auto',
-        'padding-top': '300px'
+        overflow: 'hidden',
+        'padding-top': '300px',
+        'top': 'inherit'
     }
     // 不能被覆盖的属性
     let filterDropDownPro = ['overflow']

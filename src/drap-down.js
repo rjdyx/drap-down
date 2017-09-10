@@ -47,48 +47,12 @@ $.fn.initDropDown = function ({staticElementId, cssParams = {}}) {
 }
 
 $(function () {
+    GlobalVariable.height = $(GlobalVariable.dropDown).height()
     GlobalVariable.dropDown.scrollTop = 300
     $(GlobalVariable.dropDown).scroll((event) => {
         let scrollTop = GlobalVariable.dropDown.scrollTop
-        if (!GlobalVariable.scrollIntervel) {
-            GlobalVariable.scrollIntervel = scrollTop
-        }
-        let letiable = scrollTop - GlobalVariable.scrollIntervel
-        GlobalVariable.scrollIntervel = scrollTop
-        if (scrollTop === 0 && GlobalVariable.dropDown.style.paddingTop === '0px') {
-            setTimeout(reset, 100)
-        }
-        if (scrollTop <= 300 && GlobalVariable.dropDown.style.paddingTop !== '0px') {
-            if (!GlobalVariable.upDownFlag) {
-                console.log('scroll down')
-                let intervel = 0
-                intervel = rollbackSpeed(scrollTop, 100)
-                GlobalVariable.dropDown.scrollTop += intervel
-            }
-        }
-        if (scrollTop <= 100 && GlobalVariable.dropDown.style.paddingTop !== '0px') {
+        if (scrollTop <= 100) {
             GlobalVariable.dropDown.scrollTop = 100
-        }
-        // if (letiable < 0 && letiable !== -300 && GlobalVariable.dropDown.style.paddingTop === '0px') {
-        //     console.log('ddd')
-        //     GlobalVariable.dropDown.style.paddingTop = '300px'
-        //     GlobalVariable.dropDown.scrollTop += 300
-        // }
-        if (letiable < 0 && scrollTop > 300 && !GlobalVariable.touching && !GlobalVariable.reset) {
-            $('#header p').html('delete padding')
-            console.log('delete padding')
-            GlobalVariable.reset = true
-            GlobalVariable.dropDown.scrollTop -= 300
-            GlobalVariable.dropDown.style.paddingTop = '0px'
         }
     })
 })
-
-function reset () {
-    $('#header p').html('reset')
-    GlobalVariable.dropDown.style.paddingTop = '300px'
-    GlobalVariable.dropDown.scrollTop += 300
-    GlobalVariable.reset = false
-    bindTouchmove()
-    bindTouchend()
-}
