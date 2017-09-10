@@ -246,6 +246,9 @@ function rollbackSpeed (scrollTop, speed = 50) {
     if (intervel > 5) {
         intervel = 5
     }
+    if (intervel === 0) {
+        intervel = 0.01
+    }
     return intervel
 }
 
