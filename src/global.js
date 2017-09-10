@@ -17,7 +17,9 @@ let GlobalVariable = {
     // 表示正在触碰
     touching: false,
     // 记录第一次触碰时的滚动条距离
-    firstScroll: 0
+    firstScroll: 0,
+    // 记录上一次拖动的间距
+    lastIntervel: 0
 }
 
 export { GlobalVariable }

@@ -27,7 +27,7 @@ function touchstart (event) {
  * @param  {object} event 触摸事件对象
  */
 function touchmove (event) {
-    console.log('moving')
+    // console.log('moving')
     // 阻止触摸时浏览器的缩放、滚动条滚动等
     event.preventDefault()
     // 获取滚动条距离
@@ -49,21 +49,22 @@ function touchmove (event) {
     let tmp = GlobalVariable.dropDown.style.top
     let now = tmp === 'inherit' ? tmp : (tmp).substring(0, tmp.length - 2)
     let intervel = 0
-    console.log('GlobalVariable.scrollTop: ' + GlobalVariable.scrollTop)
+    // console.log('GlobalVariable.scrollTop: ' + GlobalVariable.scrollTop)
     // 下拉操作
     if (letiable > 0) {
-        console.log('下拉')
+        // console.log('下拉')
         // flag为true，则触摸结束时触发回滚且表示触摸滑动操作一直在继续
         GlobalVariable.flag = true
         // scrollTop小于300则触发减速下滑操作
-        console.log(GlobalVariable.scrollTop)
-        console.log(now)
+        // console.log(GlobalVariable.scrollTop)
+        // console.log(now)
         if (GlobalVariable.scrollTop <= 300 && now === 'inherit') {
-            console.log(2)
+            // console.log(2)
             intervel = rollbackSpeed(GlobalVariable.scrollTop, 70)
+            // console.log('intervel: ' + intervel)
             GlobalVariable.dropDown.scrollTop -= intervel
         } else {
-            console.log(3)
+            // console.log(3)
             GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
             // 使用top操控上滑过并且现在top的值大于等于0，则停止top操控
             if ((now * 1.0 + letiable) >= 0) {
@@ -76,13 +77,13 @@ function touchmove (event) {
             }
         }
     } else if (letiable < 0) { // 上滑操作
-        console.log('上滑')
+        // console.log('上滑')
         // 下拉出现背景后的上滑操作
         if (GlobalVariable.scrollTop < 300) {
-            console.log(4)
+            // console.log(4)
             GlobalVariable.dropDown.scrollTop -= letiable
         } else { // 其他情况的上滑操作
-            console.log(5)
+            // console.log(5)
             // 使用top控制滑动，故将top从inherit转换成pix
             if (now === 'inherit') {
                 GlobalVariable.dropDown.style.top = '0px'
