@@ -9,6 +9,10 @@
     <meta name="screen-orientation" content="portrait">
     <!-- QQ强制竖屏 -->
     <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
     <title>drap Down</title>
     <% if (process.env.NODE_ENV !== 'development') { %>
         <link href="css/reset.css" rel="stylesheet">
@@ -29,9 +33,11 @@
             <span></span>
             <p>Drop Down</p>
         </div>
+        <div id="add">新增</div>
+        <div id="delete">删除</div>
         <div class="content">
             <ul>
-                <% for (var i = 0 ; i < 10 ; i++) { %>
+                <% for (var i = 0 ; i < 1 ; i++) { %>
                     <li>
                         <% if (process.env.NODE_ENV !== 'development') { %>
                             <img src="images/logo.png" alt="" class="goods-pic" style="width: 25%;">
@@ -83,6 +89,25 @@
             cssParams: css
         }
         $('#fontground').initDropDown(params);
+        $(function() {
+            $('#add').click(function() {
+                let length = $('.content ul li').length
+                // let img = '<img src="images/logo.png" alt="" class="goods-pic" style="width: 25%;">'
+                let img = '<img src="../../static/logo.png" alt="" class="goods-pic" style="width: 25%;">'
+                let li =
+                    '<li>' + img +
+                    '    <div class="text">' + 
+                    '        <p class="title">What is Vue.js?</p>' +
+                    '        <p class="description">Vue is a progressive framework</p>' +
+                    '        <p class="description">' + length + '</p>' +
+                    '    </div>' +
+                    '</li>'
+                $('.content ul').append(li)
+            })
+            $('#delete').click(function() {
+                $('.content ul li:last-child').remove()
+            })
+        })
     </script>
 </body>
 </html>

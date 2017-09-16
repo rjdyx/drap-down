@@ -12,7 +12,6 @@ function init (GlobalVariableParams) {
  */
 function touchstart (event) {
     // console.log('start')
-    event.preventDefault()
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
     // 记录第一个触摸点的y坐标
@@ -41,7 +40,7 @@ function touchmove (event) {
     let intervel = 0
     // 下拉操作
     if (letiable > 0) {
-        console.log('下拉')
+        // console.log('下拉')
         // flag为true，表示触摸滑动操作一直在继续且触摸结束时触发回滚
         GlobalVariable.flag = true
         // 减速下滑操作
@@ -56,9 +55,12 @@ function touchmove (event) {
         GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
     }
     // 停止下拉
-    console.log(GlobalVariable.dropDownHeight - GlobalVariable.windowHeight)
     if (letiable < 0 && GlobalVariable.dropDownHeight - GlobalVariable.windowHeight <= -now) {
-        GlobalVariable.dropDown.style.top = -(GlobalVariable.dropDownHeight - GlobalVariable.windowHeight) + 'px'
+        if (GlobalVariable.dropDownHeight < GlobalVariable.windowHeight) {
+            GlobalVariable.dropDown.style.top = '0px'
+        } else {
+            GlobalVariable.dropDown.style.top = -(GlobalVariable.dropDownHeight - GlobalVariable.windowHeight) + 'px'
+        }
     }
 }
 
@@ -80,22 +82,11 @@ function touchend (event) {
     }
 }
 
-function touching (event) {
-    GlobalVariable.touching = true
-}
-
-function touched (event) {
-    GlobalVariable.touching = false
-}
-
 /**
  * 静止元素的触摸开始函数
  * @param  {object} event 触摸事件对象
  */
-function staticTouchstart (event) {
-    // 阻止触摸时浏览器的缩放、滚动条滚动等
-    event.preventDefault()
-}
+function staticTouchstart (event) {}
 
 /**
  * 静止元素的触摸移动过程函数
@@ -205,8 +196,6 @@ export {
     touchstart,
     touchmove,
     touchend,
-    touching,
-    touched,
     bindTouchstart,
     bindTouchmove,
     bindTouchend,

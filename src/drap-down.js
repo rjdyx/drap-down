@@ -3,8 +3,6 @@ import { initCss } from './style'
 import {
     init,
     touchend,
-    touching,
-    touched,
     bindTouchstart,
     bindTouchmove,
     bindTouchend,
@@ -40,24 +38,15 @@ $.fn.initDropDown = function ({staticElementId, cssParams = {}}) {
     bindTouchstart()
     bindTouchmove()
     bindTouchend()
-    GlobalVariable.dropDown.addEventListener('touchmove', touching)
-    GlobalVariable.dropDown.addEventListener('touchend', touched)
-    GlobalVariable.staticElement.on('touchstart', staticTouchstart)
     GlobalVariable.staticElement.on('touchmove', staticTouchmove)
-    GlobalVariable.staticElement.on('touchend', staticTouchend)
 
     // 初始化样式
     GlobalVariable.cssParams = cssParams
     initCss(this, cssParams)
 }
 
-$(function () {
-    GlobalVariable.height = $(GlobalVariable.dropDown).height()
-    GlobalVariable.dropDown.scrollTop = 300
-    $(GlobalVariable.dropDown).scroll((event) => {
-        let scrollTop = GlobalVariable.dropDown.scrollTop
-        if (scrollTop <= 100) {
-            GlobalVariable.dropDown.scrollTop = 100
-        }
+$(() => {
+    GlobalVariable.dropDown.addEventListener('DOMSubtreeModified', () => {
+        GlobalVariable.dropDownHeight = $(GlobalVariable.dropDown).height()
     })
 })

@@ -2,7 +2,6 @@ import { GlobalVariable } from './global'
 // 自定义下拉模块的样式
 // dropDown属性对应自定义的前景下拉模块，其中overflow属性无法修改
 const initCss = (dropDown, cssParams, cusCss = null) => {
-    GlobalVariable.dropDownHeight = dropDown.height()
     GlobalVariable.windowHeight = $(window).height()
     let parentOriginCss = {
         position: 'relative',
@@ -13,7 +12,6 @@ const initCss = (dropDown, cssParams, cusCss = null) => {
     let dropDownCss = {
         position: 'absolute',
         width: '100%',
-        height: GlobalVariable.dropDownHeight + 'px',
         overflow: 'hidden',
         'top': '0px'
     }
