@@ -8,6 +8,8 @@ let GlobalVariable = {
     flag: true,
     // 静止元素对象
     staticElement: null,
+    //
+    parentOrigin: null,
     // 下拉元素对象
     dropDown: null,
     // 下拉元素扩展样式对象
@@ -17,7 +19,9 @@ let GlobalVariable = {
     // 表示正在触碰
     touching: false,
     // 记录第一次触碰时的滚动条距离
-    firstScroll: 0,
+    dropDownHeight: 0,
+    //
+    windowHeight: 0,
     // 记录上一次拖动的间距
     lastIntervel: 0
 }
