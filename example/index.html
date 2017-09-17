@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="initial-scale=1,maximum-scale=3,minimum-scale=1,user-scalable=no"><meta name=HandheldFriendly content=true><meta name=screen-orientation content=portrait><meta name=screen-orientation content=portrait><meta name=x5-orientation content=portrait><title>drap Down</title><link href=css/reset.css rel=stylesheet><link href=css/index.css rel=stylesheet></head><body><div id=background><p>由Rigar浏览器内核</p><p>提供支持</p></div><div id=fontground><div id=header><span></span><p>Drop Down</p></div><div class=content><ul><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>0</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>1</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>2</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>3</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>4</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>5</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>6</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>7</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>8</p></div></li><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>9</p></div></li></ul></div></div><div id=bottom><ul><li><a href=#><span class=img id=home></span><span>home</span></a></li><li><a href=#><span class=img id=shop></span><span>shop</span></a></li><li><a href=#><span class=img id=list></span><span>list</span></a></li><li><a href=#><span class=img id=user></span><span>user</span></a></li></ul></div><script type=text/javascript src=public/jquery-3.1.1.min.js></script><script src=js/drop-down.29fc27c0028268c74620.js></script><script type=text/javascript>// 可自定义下拉模块的样式
+<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="initial-scale=1,maximum-scale=3,minimum-scale=1,user-scalable=no"><meta name=HandheldFriendly content=true><meta name=screen-orientation content=portrait><meta name=screen-orientation content=portrait><meta name=x5-orientation content=portrait><meta name=full-screen content=yes><meta name=x5-fullscreen content=true><title>drap Down</title><link href=css/reset.css rel=stylesheet><link href=css/index.css rel=stylesheet></head><body><div id=background><p>由Rigar浏览器内核</p><p>提供支持</p></div><div id=fontground><div id=header><span></span><p>Drop Down</p></div><div id=add>新增</div><div id=delete>删除</div><div class=content><ul><li><img src=images/logo.png alt="" class=goods-pic style="width: 25%"><div class=text><p class=title>What is Vue.js?</p><p class=description>Vue is a progressive framework</p><p class=description>0</p></div></li></ul></div></div><div id=bottom><ul><li><a href=#><span class=img id=home></span><span>home</span></a></li><li><a href=#><span class=img id=shop></span><span>shop</span></a></li><li><a href=#><span class=img id=list></span><span>list</span></a></li><li><a href=#><span class=img id=user></span><span>user</span></a></li></ul></div><script type=text/javascript src=public/jquery-3.1.1.min.js></script><script src=js/drop-down.a6457355f9b190aa0e85.js></script><script type=text/javascript>// 可自定义下拉模块的样式
         // parent属性对应下拉模块的父元素，其中position，top，left三个属性无法修改
         // dropDown属性对应自定义的前景下拉模块，其中overflow属性无法修改
         var css = {
@@ -15,4 +15,23 @@
             staticElementId: 'bottom',
             cssParams: css
         }
-        $('#fontground').initDropDown(params);</script></body></html>
+        $('#fontground').initDropDown(params);
+        $(function() {
+            $('#add').click(function() {
+                let length = $('.content ul li').length
+                let img = '<img src="images/logo.png" alt="" class="goods-pic" style="width: 25%;">'
+                // let img = '<img src="../../static/logo.png" alt="" class="goods-pic" style="width: 25%;">'
+                let li =
+                    '<li>' + img +
+                    '    <div class="text">' + 
+                    '        <p class="title">What is Vue.js?</p>' +
+                    '        <p class="description">Vue is a progressive framework</p>' +
+                    '        <p class="description">' + length + '</p>' +
+                    '    </div>' +
+                    '</li>'
+                $('.content ul').append(li)
+            })
+            $('#delete').click(function() {
+                $('.content ul li:last-child').remove()
+            })
+        })</script></body></html>
