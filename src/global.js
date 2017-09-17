@@ -4,6 +4,8 @@
 let GlobalVariable = {
     // 全局y坐标
     globalYPosition: 0,
+    //
+    firstPosition: 0,
     // 是否触发回滚
     flag: true,
     // 静止元素对象

@@ -15,7 +15,7 @@ function touchstart (event) {
     // 获取第一个触摸点
     let touch = event.targetTouches[0]
     // 记录第一个触摸点的y坐标
-    GlobalVariable.globalYPosition = touch.pageY
+    GlobalVariable.firstPosition = GlobalVariable.globalYPosition = touch.pageY
     // 清除class
     $(GlobalVariable.dropDown).removeClass('slideInUp')
 }
@@ -45,6 +45,7 @@ function touchmove (event) {
         GlobalVariable.flag = true
         // 减速下滑操作
         if (now >= 0) {
+            letiable = rollbackSpeed(touch.pageY - GlobalVariable.firstPosition)
             GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
         } else {
             GlobalVariable.dropDown.style.top = now * 1.0 + letiable + 'px'
@@ -77,6 +78,8 @@ function touchend (event) {
         // 初始参数复原
         GlobalVariable.flag = false
         GlobalVariable.globalYPosition = 0
+        GlobalVariable.firstPosition = 0
+        GlobalVariable.lastIntervel = 0
         let top = GlobalVariable.dropDown.style.top
         rollback(top)
     }
@@ -158,36 +161,31 @@ function unbindTouchend () {
 
 /**
  * 回滚速度
- * @param  {Integer} scrollTop 滚动条距离
+ * @param  {Integer} position 滚动条距离
  * @param  {Integer} speed 速度倍数，默认50
  * @return {double}  速率
  */
-function rollbackSpeed (scrollTop, speed = 50) {
+function rollbackSpeed (position, speed = 50) {
     let intervel = 0
+    console.log('position: ' + position)
+    if (position === 0) {
+        position = 1
+    }
     if (!GlobalVariable.lastIntervel) {
-        GlobalVariable.lastIntervel = Math.log(301 - scrollTop) - 0.1
+        GlobalVariable.lastIntervel = Math.log(position) - 0.1
     }
-    if (301 - scrollTop === 1) {
-        intervel = 0.1
-    } else {
-        intervel = Math.log(301 - scrollTop) - GlobalVariable.lastIntervel
-        GlobalVariable.lastIntervel = Math.log(301 - scrollTop)
-    }
+    intervel = Math.log(position) - GlobalVariable.lastIntervel
+    GlobalVariable.lastIntervel = Math.log(position)
     // 将其他情况的归零
     if (!intervel) {
-        intervel = 0
+        intervel = 0.01
     }
     // 防止数字过大
     if (intervel > 0.1) {
         intervel = 0.01
     }
     intervel = Math.abs(intervel) * speed
-    if (intervel > 5) {
-        intervel = 5
-    }
-    if (intervel === 0) {
-        intervel = 0.01
-    }
+    console.log('intervel: ' + intervel)
     return intervel
 }
 
